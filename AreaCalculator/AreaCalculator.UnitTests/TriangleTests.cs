@@ -54,7 +54,7 @@ namespace AreaCalculator.UnitTests
         public void IsRightTriangle_TriangleIsNOTRight_False()
         {
             //Arrange
-            var triangle = new Triangle(3, 4, 6);
+            var triangle = new Triangle(3.0001, 4, 5);
             
             //Act
             var isRightTriangle = triangle.IsRightTriangle();
