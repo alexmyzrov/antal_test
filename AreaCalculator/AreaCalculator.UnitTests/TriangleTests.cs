@@ -20,22 +20,21 @@ namespace AreaCalculator.UnitTests
         }
         
         [Theory]
+        // triangle side is zero
         [InlineData(0, 1, 1)]
         [InlineData(1, 0, 1)]
         [InlineData(1, 1, 0)]
-        
+        // triangle side is negative
         [InlineData(-1, 1, 1)]
         [InlineData(1, -1, 1)]
         [InlineData(1, 1, -1)]
+        // impossible triangle
+        [InlineData(3, 4, 10)]
+        [InlineData(10, 3, 4)]
+        [InlineData(3, 10, 4)]
         public void Constructor_WrongSideValue_ThrowsException(double a, double b, double c)
         {
             Assert.Throws<ArgumentException>(() => new Triangle(a, b, c));
-        }
-        
-        [Fact]
-        public void Constructor_TriangleImpossible_ThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() => new Triangle(5, 6, 100));
         }
         
         [Fact]
@@ -62,6 +61,19 @@ namespace AreaCalculator.UnitTests
             
             //Assert
             Assert.False(isRightTriangle);
+        }
+        
+        [Fact]
+        public void IsRightTriangle_ToleranceSet_CalculateWithRounding()
+        {
+            //Arrange
+            var triangle = new Triangle(3.0001, 4, 5);
+            
+            //Act
+            var isRightTriangle = triangle.IsRightTriangle(0.001);
+            
+            //Assert
+            Assert.True(isRightTriangle);
         }
     }
 }
